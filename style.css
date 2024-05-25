@@ -1,0 +1,406 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --shadow: rgba(0, 0, 0, 0.1);
+    --background: #eeeeee;
+}
+
+/* @media (prefers-color-scheme: dark) {
+    body {
+        background-color: black;
+        color: white;
+    }
+} */
+
+/* ::-webkit-scrollbar {
+width: 0.2vw;
+}
+::-webkit-scrollbar:hover {
+width: 0.4vw;
+}
+
+::-webkit-scrollbar-track {
+background: rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb {
+background: rgba(0, 0, 0, 0.2);
+border-radius: 1vw;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+width: 0.4vw;
+} */
+
+.playfair-display {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.ubuntu-light {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.ubuntu-regular {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.ubuntu-medium {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.ubuntu-bold {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.ubuntu-light-italic {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.ubuntu-regular-italic {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.ubuntu-medium-italic {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.ubuntu-bold-italic {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+}
+
+h1{
+    font-size: 2vw;
+    line-height: 3vw;
+}
+
+h2{
+    margin: 3vh 0 1vh 0;
+    font-size: 1.5vw;
+    line-height: 2.5vw;
+}
+
+h3{
+    font-size: 1vw;
+    line-height: 2vw;
+}
+
+p, li{
+    font-size: 1vw;
+    line-height: 1.5vw;
+    list-style: none;
+}
+
+body{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    background-color: var(--background);
+}
+
+.noMargin{
+    margin: 0 !important;
+}
+
+/* Aside */
+
+aside{
+    width: 23vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+aside .mini_card{
+    margin-top: 1em ;
+
+}
+
+aside .mini_card:last-child{
+    margin-bottom: 1em;
+}
+
+/* mini card  */
+
+.mini_card {
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 2vh;
+    box-shadow: 0 0 2vw var(--shadow);
+
+    transition: all 0.3s ease;
+}
+
+.mini_card:hover {
+    scale: 1.05;
+    box-shadow: 0 0 4vw var(--shadow);
+
+    transition: all 0.3s ease;
+}
+
+.mini_card .image {
+    width: 100%;
+    height: 20vh;
+    margin: 0 0 0 0;
+}
+
+.mini_card .image img {
+    border-radius: 2vh 2vh 0 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mini_card .info {
+    text-align: left;
+}
+
+.mini_card .data {
+    font-size: 0.8vw;
+    margin-top: 1vh;
+}
+
+.mini_card h2, .mini_card p{
+    margin: 0 0 0 0.5vw;
+    line-height: normal;
+}
+
+.mini_card h2{
+    font-size: 1.5em;
+    padding: 0 0 1vh 0;
+}
+
+/* Main */
+
+main{
+    width: 77vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+
+main .mainBox {
+    width: 50%;
+    padding: 1vh 0 2vh 0;
+    border-radius: 2vh;
+    box-shadow: 0 0 20px var(--shadow);
+    background-color: #ffffff;
+    margin: 1em 0 1em 0;
+}
+
+main .mainBox .imageCarousel{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: fit-content;
+    overflow-x: auto;
+    overflow-y: visible; 
+    padding: 0 1vw 0 1vw;
+}
+
+main .mainBox .imageCarousel img{
+    height: 16vw;
+    margin: 1vh 1vw 1vh 0;
+    border-radius: 1vh;
+    box-shadow: 0 0 10px var(--shadow);
+
+    transition: all 0.3s ease;
+}
+
+main .mainBox .imageCarousel img:hover{
+    scale: 1.05;
+    box-shadow: 0 0 20px var(--shadow);
+
+    transition: all 0.3s ease;
+}
+
+main .mainBox .title, main .mainBox .content, main .mainBox .description{
+    padding: 0 16px 0 16px;
+}
+
+main .mainBox .content p{
+    margin: 1vh 0 1vh 0;
+}
+
+main .mainBox .content .techStack {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5em;
+    margin: 1em 0 0 0;
+}
+
+main .mainBox .content .techStack img{
+    height: 4em;
+    width: 4em;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+/* Big image */
+
+.big-image{
+    max-height: 80vh;
+    max-width: 80vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+}
+
+.blurred {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999; 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* HOtizontal list */
+
+.horizontalList{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 2vw;
+}
+
+.experience{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 1vh 0 2vh 0;
+}
+
+.experience h3, .experience p{
+    margin: 0 0 0 0;
+}
+
+@media (max-width: 768px) {
+    h1{
+        font-size: 4vh;
+        line-height: 6vh;
+    }
+    
+    h2{
+        font-size: 3vh;
+        line-height: 5vh;
+    }
+    
+    h3{
+        font-size: 2vh;
+        line-height: 4vh;
+    }
+    
+    p, li{
+        font-size: 2vh;
+        line-height: 3vh;
+    }
+
+    body {
+        flex-direction: column;
+        overflow-y: auto;
+        height: fit-content;
+    }
+    
+    aside {
+        width: 100%;
+        height: 27vh;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        min-height: fit-content;
+        overflow-x: auto;
+        overflow-y: hidden; 
+    }
+
+    aside .mini_card {
+        min-width: 75%;
+        margin: 0 2vw 0 2vw;
+        height: 26vh;
+    }
+
+    aside .mini_card:hover {
+        scale: 1;
+    }
+
+    aside .mini_card .image {
+        height: 18vh;
+    }
+
+    aside .mini_card .info .data {
+        font-size: 1em;
+    }
+
+    aside .mini_card h2 {
+        line-height: 2.5vh;
+    }
+    
+    main {
+        width: 100%;
+        overflow-y: hidden;
+    }
+    
+    main .mainBox {
+        width: 96%;
+        margin: 1vh 2vw 1vh 2vw;
+    }
+    
+    main .mainBox .imageCarousel img {
+        height: 20vh;
+        margin: 1vh 2vw 1vh 2vw;
+    }
+    main .mainBox .imageCarousel img:hover {
+        scale:1;
+    }
+    
+    .big-image {
+        max-height: 60vh;
+        max-width: 90vw;
+    }
+
+    .blurred{
+        height: 100%;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+    }
+}
