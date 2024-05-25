@@ -1,1 +1,1 @@
-web: Serve -s .
+web: npm start
