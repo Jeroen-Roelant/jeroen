@@ -340,6 +340,10 @@ main .mainBox .content .techStack img{
         overflow-y: auto;
         height: fit-content;
     }
+
+    .nostyle {
+        font-style: normal;   
+    }
     
     aside {
         width: 100%;
@@ -356,6 +360,10 @@ main .mainBox .content .techStack img{
         min-width: 75%;
         margin: 0 2vw 0 2vw;
         height: 26vh;
+    }
+
+    aside .mini_card:last-child{
+        margin-bottom: 0;
     }
 
     aside .mini_card:hover {
