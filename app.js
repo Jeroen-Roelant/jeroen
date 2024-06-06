@@ -3,8 +3,10 @@ var serveStatic = require('serve-static');
 
 connect()
     .use(serveStatic(__dirname + '/portfolio'))
-    .use('/cv', function(req, res, next) {
-        res.writeHead(301, { 'Location': '/cv_JeroenRoelant.pdf' });
+    .use('/cv', (req, res) => {
+        res.writeHead(302, {
+            'Location': 'https://drive.google.com/file/d/13EGmqXNyvIw8KwkuFV4bqFy-DbzIOpiN/view?usp=sharing'
+        });
         res.end();
     })
     .listen(process.env.PORT || 3000, () => console.log('Server running on ' + (process.env.PORT || 3000)));
