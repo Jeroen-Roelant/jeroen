@@ -3,7 +3,7 @@
         "imageSrc": ["./images/Events/forward1.jpg"],
         "Description": "Cool events",
         "Title": "Events",
-        "Content": ""
+        "Content": "Forward festival"
     },
     {
         "imageSrc": ["./images/WordAnimation/1.gif", "./images/WordAnimation/2.gif", "./images/UselessWeb/1.gif", "./images/UselessWeb/2.gif"],
