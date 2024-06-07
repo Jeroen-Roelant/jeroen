@@ -118,6 +118,10 @@ a{
     color: rgb(78, 170, 158);
 }
 
+a:hover{
+    opacity: 0.8;
+}
+
 body{
     display: flex;
     flex-direction: row;
@@ -269,6 +273,11 @@ main .mainBox .content .techStack img{
     width: 4em;
     border-radius: 100%;
     object-fit: cover;
+}
+
+main .mainBox .content img{
+    max-width: 100%;
+    border-radius: 1vh;
 }
 
 /* Big image */
