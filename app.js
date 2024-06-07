@@ -1,11 +1,12 @@
 var connect = require('connect');
 var serveStatic = require('serve-static');
+require('dotenv').config();
 
 connect()
     .use(serveStatic(__dirname + '/portfolio'))
     .use('/cv', (req, res) => {
         res.writeHead(302, {
-            'Location': 'https://drive.google.com/file/d/13EGmqXNyvIw8KwkuFV4bqFy-DbzIOpiN/view?usp=sharing'
+            'Location': process.env.CV_URL
         });
         res.end();
     })
