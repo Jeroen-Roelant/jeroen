@@ -114,6 +114,10 @@ p, li{
     list-style: none;
 }
 
+a{
+    color: rgb(78, 170, 158);
+}
+
 body{
     display: flex;
     flex-direction: row;
