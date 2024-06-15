@@ -22,7 +22,7 @@ function addToIplogs(log) {
 
 connect()
     .use((req, res, next) => {
-        addToIplogs(`Incoming request from IP address: ${req.connection.remoteAddress} for ${req.url} at ${new Date().toLocaleString('en-GB')}`);
+        addToIplogs(`Incoming request from IP address: ${req.connection.remoteAddress} for ${req.url} at ${new Date().toLocaleString('en-GB')} UTC`);
         next();
     })
     .use(serveStatic(__dirname + '/portfolio'))
@@ -41,7 +41,7 @@ connect()
             res.end(`
                 <div>
                     <h1>Dashboard</h1>
-                    <p>Running since ${startDateTime.toLocaleString('en-GB')} </p>
+                    <p>Running since ${startDateTime.toLocaleString('en-GB')} UTC </p>
                     <p>cv clicks: ${cvRefs} </p>
                     <p>dash visits: ${dashRefs} </p>
                     <p>IP logs: </p>
