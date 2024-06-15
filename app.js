@@ -2,7 +2,6 @@ var connect = require('connect');
 var serveStatic = require('serve-static');
 var qs = require('qs');
 
-
 require('dotenv').config();
 
 let startDateTime = new Date();
@@ -10,7 +9,7 @@ let cvRefs = 0;
 let dashRefs = 0;
 let iplogs = [];
 
-const MAX_IPLOGS = 1000;
+const MAX_IPLOGS = process.env.MAXIPLOGS || 1000;
 
 function addToIplogs(log) {
     if (iplogs.length >= MAX_IPLOGS) {
@@ -22,11 +21,16 @@ function addToIplogs(log) {
 
 connect()
     .use((req, res, next) => {
+        // Log every site visit
         addToIplogs(`${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress} ${req.method} ${req.url}`);
         next();
     })
-    .use(serveStatic(__dirname + '/portfolio'))
+    .use(
+        // Serve the portfolio
+        serveStatic(__dirname + '/portfolio')
+    )
     .use('/cv', (req, res) => {
+        // Redirect to the CV
         res.writeHead(302, {
             'Location': process.env.CV_URL
         });
@@ -34,6 +38,7 @@ connect()
         res.end();
     })
     .use('/dash', (req, res) => {
+        // Dashboard
         var query = qs.parse(req._parsedUrl.query);
         const password = query.pwd;
         if (password === process.env.PASSWORD) {
