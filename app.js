@@ -10,9 +10,19 @@ let cvRefs = 0;
 let dashRefs = 0;
 let iplogs = [];
 
+const MAX_IPLOGS = 1000;
+
+function addToIplogs(log) {
+    if (iplogs.length >= MAX_IPLOGS) {
+        iplogs.shift(); // Remove the oldest item
+    }
+    iplogs.push(log);
+}
+
+
 connect()
     .use((req, res, next) => {
-        iplogs.push(`Incoming request from IP address: ${req.connection.remoteAddress} for ${req.url} at ${new Date().toLocaleString('en-GB')}`);
+        addToIplogs(`Incoming request from IP address: ${req.connection.remoteAddress} for ${req.url} at ${new Date().toLocaleString('en-GB')}`);
         next();
     })
     .use(serveStatic(__dirname + '/portfolio'))
