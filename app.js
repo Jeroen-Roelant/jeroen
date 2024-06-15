@@ -22,7 +22,7 @@ function addToIplogs(log) {
 
 connect()
     .use((req, res, next) => {
-        addToIplogs(`Incoming request from IP address: ${req.connection.remoteAddress} for ${req.url} at ${new Date().toLocaleString('en-GB')} UTC`);
+        addToIplogs(`${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress} ${req.method} ${req.url}`);
         next();
     })
     .use(serveStatic(__dirname + '/portfolio'))
@@ -54,6 +54,5 @@ connect()
             res.statusCode = 401;
             res.end('Unauthorized');
         }
-        
     })
     .listen(process.env.PORT || 3000, () => console.log('Server running on ' + (process.env.PORT || 3000)));
