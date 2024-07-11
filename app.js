@@ -27,10 +27,10 @@ connect()
         // Log every site visit
         if(!pathsToIgnore.includes(req.url)){
             if (req.url.includes(`/dash?pwd=${process.env.PASSWORD}`)) {
-                addToIplogs(`<span style='color: rgb(255, 40, 40)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress} ${req.method} ${req.url}</span>`);
+                addToIplogs(`<span style='color: rgb(255, 40, 40)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}    ${req.method}   ${req.url}</span>`);
             }
             else if (req.url.includes('/dash')) {
-                addToIplogs(`<span style='color: rgb(243, 181, 11)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress} ${req.method} ${req.url}</span>`);
+                addToIplogs(`<span style='color: rgb(243, 181, 11)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}   ${req.method}   ${req.url}</span>`);
             }
             else {
                 addToIplogs(`${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress} ${req.method} ${req.url}`);
