@@ -76,17 +76,17 @@ connect()
         // Redirect to the CV
         if (method === 'mail') {
             connection.query(
-                'UPDATE cvrefs SET mailRef = mailRef + 1 WHERE id = (SELECT MAX(id) FROM cvrefs);', 
+                'UPDATE cvrefs SET mailRef = mailRef + 1 WHERE id = (SELECT MAX(id));', 
                 (err, result) => { if (err) console.error(err); 
             });
         } else if (method === 'site') {
             connection.query(
-                'UPDATE cvrefs SET siteRef = siteRef + 1 WHERE id = (SELECT MAX(id) FROM cvrefs);', 
+                'UPDATE cvrefs SET siteRef = siteRef + 1 WHERE id = (SELECT MAX(id));', 
                 (err, result) => { if (err) console.error(err); 
             });
         } else {
             connection.query(
-                'UPDATE cvrefs SET otherRef = otherRef + 1 WHERE id = (SELECT MAX(id) FROM cvrefs);', 
+                'UPDATE cvrefs SET otherRef = otherRef + 1 WHERE id = (SELECT MAX(id));', 
                 (err, result) => { if (err) console.error(err); 
             });
         }
