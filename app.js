@@ -1,13 +1,22 @@
 var connect = require('connect');
 var serveStatic = require('serve-static');
 var qs = require('qs');
+var mysql = require('mysql');
 
 require('dotenv').config();
 
 let startDateTime = new Date();
+
 let cvRefs = 0;
+let cvRefsMail = 0;
+let cvRefsSite = 0;
+
+let totalCvRefs = 0;
+let totalCvRefsMail = 0;
+let totalCvRefsSite = 0;
+
 let dashRefs = 0;
-let pageVisits = 0;
+
 let iplogs = [];
 
 let pathsToIgnore = [];
@@ -21,33 +30,70 @@ function addToIplogs(log) {
     iplogs.push(log);
 }
 
+// Connect to MySQL instance
+const connection = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+});
+connection.connect((err) => {
+    if (err) {
+        console.error('Error connecting to MySQL:', err);
+    } else {
+        console.log('Connected to MySQL');
+        connection.query('CREATE TABLE IF NOT EXISTS cvrefs (id INT AUTO_INCREMENT PRIMARY KEY, siteRef INT, mailRef INT, otherRef INT);', (err, result) => { if (err) console.error(err); });
+        connection.query('INSERT INTO cvrefs (siteRef, mailRef, otherRef) VALUES (0, 0, 0);', (err, result) => { if (err) console.error(err); });
+    }
+});
+
 
 connect()
-    .use((req, res, next) => {
-        // Log every site visit
-        if(!pathsToIgnore.includes(req.url)){
-            if (req.url.includes(`/dash?pwd=${process.env.PASSWORD}`)) {
-                addToIplogs(`<span style='color: rgb(255, 40, 40)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}    ${req.method}   ${req.url}</span>`);
-            }
-            else if (req.url.includes('/dash')) {
-                addToIplogs(`<span style='color: rgb(243, 181, 11)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}   ${req.method}   ${req.url}</span>`);
-            }
-            else {
-                addToIplogs(`${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress} ${req.method} ${req.url}`);
-            }
+.use((req, res, next) => {
+    // Log every site visit
+    if(!pathsToIgnore.includes(req.url)){
+        if (req.url.includes(`/dash?pwd=${process.env.PASSWORD}`)) {
+            addToIplogs(`<span style='color: rgb(255, 40, 40)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}    ${req.method}   ${req.url}</span>`);
         }
-        next();
-    })
+        else if (req.url.includes('/dash')) {
+            addToIplogs(`<span style='color: rgb(243, 181, 11)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}   ${req.method}   ${req.url}</span>`);
+        }
+        else {
+            addToIplogs(`${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress} ${req.method} ${req.url}`);
+        }
+    }
+    next();
+})
     .use(
         // Serve the portfolio
         serveStatic(__dirname + '/portfolio')
     )
     .use('/cv', (req, res) => {
+        var query = qs.parse(req._parsedUrl.query);
+        const method = query.method;
+
         // Redirect to the CV
+        if (method === 'mail') {
+            connection.query(
+                'UPDATE cvrefs SET mailRef = mailRef + 1 WHERE id = (SELECT MAX(id) FROM cvrefs);', 
+                (err, result) => { if (err) console.error(err); 
+            });
+        } else if (method === 'site') {
+            connection.query(
+                'UPDATE cvrefs SET siteRef = siteRef + 1 WHERE id = (SELECT MAX(id) FROM cvrefs);', 
+                (err, result) => { if (err) console.error(err); 
+            });
+        } else {
+            connection.query(
+                'UPDATE cvrefs SET otherRef = otherRef + 1 WHERE id = (SELECT MAX(id) FROM cvrefs);', 
+                (err, result) => { if (err) console.error(err); 
+            });
+        }
+        
         res.writeHead(302, {
             'Location': process.env.CV_URL
         });
-        cvRefs++;
+
         res.end();
     })
     .use('/dash', (req, res) => {
@@ -56,6 +102,37 @@ connect()
         const password = query.pwd;
         if (password === process.env.PASSWORD) {
             dashRefs++;
+
+            connection.query('SELECT siteRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);', (err, result) => { 
+                if (err) console.error(err);
+                cvRefsSite = result[0].siteRef;
+            });
+            
+            connection.query('SELECT mailRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);', (err, result) => { 
+                if (err) console.error(err);
+                cvRefsMail = result[0].mailRef;
+            });
+            
+            connection.query('SELECT otherRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);', (err, result) => { 
+                if (err) console.error(err);
+                cvRefs = result[0].otherRef;
+            });
+
+            connection.query('SELECT SUM(siteRef) AS totalSiteRef FROM cvrefs;', (err, result) => {
+                if (err) console.error(err);
+                totalCvRefsSite = result[0].totalSiteRef;
+            });
+
+            connection.query('SELECT SUM(mailRef) AS totalMailRef FROM cvrefs;', (err, result) => {
+                if (err) console.error(err);
+                totalCvRefsMail = result[0].totalMailRef;
+            });
+
+            connection.query('SELECT SUM(otherRef) AS totalOtherRef FROM cvrefs;', (err, result) => {
+                if (err) console.error(err);
+                totalCvRefs = result[0].totalOtherRef;
+            });
+
             res.end(`
                 <!DOCTYPE html>
                 <html>
@@ -67,9 +144,10 @@ connect()
                         <div>
                             <h1>Dashboard</h1>
                             <p>Running since ${startDateTime.toLocaleString('en-GB')} UTC </p>
-                            <p>cv clicks: ${cvRefs} </p>
+                            <p>cv clicks site: ${cvRefsSite} (total: ${totalCvRefsSite}) </p>
+                            <p>cv clicks mail: ${cvRefsMail} (total: ${totalCvRefsMail}) </p>
+                            <p>cv clicks other: ${cvRefs} (total: ${totalCvRefs}) </p>
                             <p>dash visits: ${dashRefs} </p>
-                            <p>page visits: ${pageVisits} </p>
                         </div>
 
                         <div>
