@@ -48,10 +48,10 @@ connection.connect((err) => {
         console.log('Connected to MySQL');
         connection.query('CREATE TABLE IF NOT EXISTS cvrefs (id INT AUTO_INCREMENT PRIMARY KEY, siteRef INT, mailRef INT, otherRef INT);', (err, result) => { if (err) console.error(err); });
         connection.query('INSERT INTO cvrefs (siteRef, mailRef, otherRef) VALUES (0, 0, 0);', (err, result) => { if (err) console.error(err); });
-        connection.query('SELECT COUNT(*) FROM cvrefs AS count;', 
+        connection.query('SELECT COUNT(*) AS refsCount FROM cvrefs;', 
             (err, result) => { 
                 if (err) console.error(err); 
-                cvRefsCurrentRow = result[0].count;
+                cvRefsCurrentRow = result[0].refsCount;
             });
     }
 });
@@ -84,17 +84,17 @@ connect()
         // Redirect to the CV
         if (method === 'mail') {
             connection.query(
-                'UPDATE cvrefs SET mailRef = mailRef + 1 WHERE id = (SELECT MAX(id) FROM cvrefs);', 
+                `UPDATE cvrefs SET mailRef = mailRef + 1 WHERE id = ${cvRefsCurrentRow};`, 
                 (err, result) => { if (err) console.error(err); 
             });
         } else if (method === 'site') {
             connection.query(
-                'UPDATE cvrefs SET siteRef = siteRef + 1 WHERE id = (SELECT MAX(id) FROM cvrefs);', 
+                `UPDATE cvrefs SET siteRef = siteRef + 1 WHERE id = ${cvRefsCurrentRow};`, 
                 (err, result) => { if (err) console.error(err); 
             });
         } else {
             connection.query(
-                'UPDATE cvrefs SET otherRef = otherRef + 1 WHERE id = (SELECT MAX(id) FROM cvrefs);', 
+                `UPDATE cvrefs SET otherRef = otherRef + 1 WHERE id = ${cvRefsCurrentRow};`, 
                 (err, result) => { if (err) console.error(err); 
             });
         }
