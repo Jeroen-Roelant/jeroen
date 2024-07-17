@@ -15,6 +15,8 @@ let totalCvRefs = 0;
 let totalCvRefsMail = 0;
 let totalCvRefsSite = 0;
 
+let cvRefsCurrentRow = 0;
+
 let dashRefs = 0;
 
 let iplogs = [];
@@ -38,6 +40,7 @@ const connection = mysql.createConnection({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
 });
+
 connection.connect((err) => {
     if (err) {
         console.error('Error connecting to MySQL:', err);
@@ -45,6 +48,11 @@ connection.connect((err) => {
         console.log('Connected to MySQL');
         connection.query('CREATE TABLE IF NOT EXISTS cvrefs (id INT AUTO_INCREMENT PRIMARY KEY, siteRef INT, mailRef INT, otherRef INT);', (err, result) => { if (err) console.error(err); });
         connection.query('INSERT INTO cvrefs (siteRef, mailRef, otherRef) VALUES (0, 0, 0);', (err, result) => { if (err) console.error(err); });
+        connection.query('SELECT COUNT(*) FROM cvrefs AS count;', 
+            (err, result) => { 
+                if (err) console.error(err); 
+                cvRefsCurrentRow = result[0].count;
+            });
     }
 });
 
