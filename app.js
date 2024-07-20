@@ -32,6 +32,40 @@ function addToIplogs(log) {
     iplogs.push(log);
 }
 
+async function getRefs() {
+    await connection.query('SELECT siteRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);', (err, result) => { 
+        if (err) console.error(err);
+        cvRefsSite = result[0].siteRef;
+    });
+    
+    await connection.query('SELECT mailRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);', (err, result) => { 
+        if (err) console.error(err);
+        cvRefsMail = result[0].mailRef;
+    });
+    
+    await connection.query('SELECT otherRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);', (err, result) => { 
+        if (err) console.error(err);
+        cvRefs = result[0].otherRef;
+    });
+
+    await connection.query('SELECT SUM(siteRef) AS totalSiteRef FROM cvrefs;', (err, result) => {
+        if (err) console.error(err);
+        totalCvRefsSite = result[0].totalSiteRef;
+    });
+
+    await connection.query('SELECT SUM(mailRef) AS totalMailRef FROM cvrefs;', (err, result) => {
+        if (err) console.error(err);
+        totalCvRefsMail = result[0].totalMailRef;
+    });
+
+    await connection.query('SELECT SUM(otherRef) AS totalOtherRef FROM cvrefs;', (err, result) => {
+        if (err) console.error(err);
+        totalCvRefs = result[0].totalOtherRef;
+    });
+
+    return true;
+}
+
 // Connect to MySQL instance
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -77,23 +111,23 @@ connect()
         // Serve the portfolio
         serveStatic(__dirname + '/portfolio')
     )
-    .use('/cv', (req, res) => {
+    .use('/cv', async (req, res) => {
         var query = qs.parse(req._parsedUrl.query);
         const method = query.method;
 
         // Redirect to the CV
         if (method === 'mail') {
-            connection.query(
+            await connection.query(
                 `UPDATE cvrefs SET mailRef = mailRef + 1 WHERE id = ${cvRefsCurrentRow};`, 
                 (err, result) => { if (err) console.error(err); 
             });
         } else if (method === 'site') {
-            connection.query(
+            await connection.query(
                 `UPDATE cvrefs SET siteRef = siteRef + 1 WHERE id = ${cvRefsCurrentRow};`, 
                 (err, result) => { if (err) console.error(err); 
             });
         } else {
-            connection.query(
+            await connection.query(
                 `UPDATE cvrefs SET otherRef = otherRef + 1 WHERE id = ${cvRefsCurrentRow};`, 
                 (err, result) => { if (err) console.error(err); 
             });
@@ -105,42 +139,19 @@ connect()
 
         res.end();
     })
-    .use('/dash', (req, res) => {
+    .use('/dash', async (req, res) => {
         // Dashboard
         var query = qs.parse(req._parsedUrl.query);
         const password = query.pwd;
+
         if (password === process.env.PASSWORD) {
             dashRefs++;
 
-            connection.query('SELECT siteRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);', (err, result) => { 
-                if (err) console.error(err);
-                cvRefsSite = result[0].siteRef;
-            });
-            
-            connection.query('SELECT mailRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);', (err, result) => { 
-                if (err) console.error(err);
-                cvRefsMail = result[0].mailRef;
-            });
-            
-            connection.query('SELECT otherRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);', (err, result) => { 
-                if (err) console.error(err);
-                cvRefs = result[0].otherRef;
-            });
+            getRefs();
 
-            connection.query('SELECT SUM(siteRef) AS totalSiteRef FROM cvrefs;', (err, result) => {
-                if (err) console.error(err);
-                totalCvRefsSite = result[0].totalSiteRef;
-            });
-
-            connection.query('SELECT SUM(mailRef) AS totalMailRef FROM cvrefs;', (err, result) => {
-                if (err) console.error(err);
-                totalCvRefsMail = result[0].totalMailRef;
-            });
-
-            connection.query('SELECT SUM(otherRef) AS totalOtherRef FROM cvrefs;', (err, result) => {
-                if (err) console.error(err);
-                totalCvRefs = result[0].totalOtherRef;
-            });
+            while (totalCvRefs === 0) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
 
             res.end(`
                 <!DOCTYPE html>
