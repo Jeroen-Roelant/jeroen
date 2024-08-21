@@ -109,8 +109,8 @@ connect()
 })
     .use(
         // Serve the portfolio
-        // serveStatic(__dirname + '/portfolio')
-        serveStatic(__dirname + '/wordleClone')
+        serveStatic(__dirname + '/portfolio')
+        // serveStatic(__dirname + '/wordleClone')
 
     )
     .use('/wordle', 
