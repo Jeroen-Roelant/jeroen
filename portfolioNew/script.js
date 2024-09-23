@@ -5,26 +5,35 @@ let data = [];
 fetch(filePath)
     .then(Response => Response.json())
     .then(data => {
-        data.forEach((e, index) => {
-            createMiniCard(index ,e.imageSrc[0], e.Description, e.Title);
-        });
-
-        document.querySelectorAll('.mini_card').forEach(card => {
-            card.addEventListener('click', () => {
-                changeMainContent(card.id);
-            });
-        });
-
         this.data = data;
-        changeMainContent(0);
-});
 
-document.addEventListener('scroll', function() {
-    const behindPic = document.getElementById('behindPic');
-    const scrollPosition = window.scrollY;
-    behindPic.style.right = `-${scrollPosition}px`;
-    behindPic.style.opacity = 1 - (scrollPosition / 1000);
-});
+        if(window.location.pathname === '/portfolioNew/projects.html' || window.location.pathname === '/projects.html' || window.location.pathname === '/preview/projects.html'){ 
+            data.forEach((e, index) => {
+                createMiniCard(index ,e.imageSrc[0], e.Description, e.Title);
+            });
+            document.querySelectorAll('.projects-list .mini_card').forEach(card => {
+                card.addEventListener('click', () => {
+                    goToProject(card.id);
+                });
+            });
+            
+        };
+
+        if(window.location.pathname === '/portfolioNew/project.html' || window.location.pathname === '/project.html' || window.location.pathname === '/preview/project.html'){
+            changeMainContent();
+        }
+    })
+
+if(window.location.pathname === '/portfolioNew/index.html' || window.location.pathname === '/portfolioNew/' || window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '/preview/index.html'){ 
+    document.addEventListener('scroll', function() {
+        const behindPic = document.getElementById('behindPic');
+        const scrollPosition = window.scrollY;
+        behindPic.style.right = `-${scrollPosition}px`;
+        behindPic.style.opacity = 1 - (scrollPosition / 1000);
+    });
+};
+
+
 
 function createMiniCard(id, imageSrc, cardDescription, cardTitle) {
     let miniCard = `
@@ -39,11 +48,19 @@ function createMiniCard(id, imageSrc, cardDescription, cardTitle) {
         </div>
     `;
     
-    let aside = document.querySelector('aside.browse');
-    aside.insertAdjacentHTML('beforeend', miniCard);
+    let comp = document.querySelector('.projects-list');
+    comp.insertAdjacentHTML('beforeend', miniCard);
 };
 
-function changeMainContent(id) {
+function goToProject(id) {
+    window.location.href = './project.html?id=' + id;
+};
+
+function changeMainContent() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = urlParams.get('id');
+
     console.log(id);
     document.querySelector('.imageCarousel').innerHTML = '';
     this.data[id].imageSrc.forEach((src, index) => {
@@ -73,5 +90,3 @@ function showImage(src){
         document.querySelector('.blurred').remove();
     });
 }
-
-
