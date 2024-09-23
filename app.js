@@ -116,6 +116,9 @@ connect()
     .use('/wordle', 
         serveStatic(__dirname + '/wordleClone')
     )
+    .use('/preview', 
+        serveStatic(__dirname + '/portfolioNew')
+    )
     .use('/cv', async (req, res) => {
         var query = qs.parse(req._parsedUrl.query);
         const method = query.method;

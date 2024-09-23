@@ -19,6 +19,13 @@ fetch(filePath)
         changeMainContent(0);
 });
 
+document.addEventListener('scroll', function() {
+    const behindPic = document.getElementById('behindPic');
+    const scrollPosition = window.scrollY;
+    behindPic.style.right = `-${scrollPosition}px`;
+    behindPic.style.opacity = 1 - (scrollPosition / 1000);
+});
+
 function createMiniCard(id, imageSrc, cardDescription, cardTitle) {
     let miniCard = `
         <div class="mini_card" id="${id}">

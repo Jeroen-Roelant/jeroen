@@ -9,6 +9,8 @@
     --background: #eeeeee;
 }
 
+/* #region fonts */
+
 .playfair-display {
     font-family: "Playfair Display", serif;
     font-optical-sizing: auto;
@@ -68,6 +70,9 @@
     font-family: "Mono", monospace;
 }
 
+/*#endregion fonts*/
+
+/* #region basicText */
 h1{
     font-size: 5em;
 }
@@ -101,21 +106,27 @@ a{
 a:hover{
     opacity: 0.8;
 }
+/*#endregion basicText*/
+
 
 body{
-    /* display: flex; */
-    /* flex-direction: row; */
-    height: 100vh;
-    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+
+	background: white;
+	background-image: radial-gradient(rgb(218, 218, 218) 1px, transparent 0);
+	background-size: 40px 40px;
+	background-position: -19px -19px;
+
 }
 
 .noMargin{
     margin: 0 !important;
 }
 
-/* mini card  */
-
-.mini_card {
+/* .mini_card {
     display: flex;
     flex-direction: column;
     width: 20vw;
@@ -164,47 +175,77 @@ body{
 .mini_card h2{
     font-size: 1.5em;
     padding: 0 0 1vh 0;
-}
+} */
 
-/* Main */
-
-/* nav */
+/* #region nav */
 nav{
-    z-index: 999;
+    position: fixed;
+    top: 2em;
+    left: 2em;
 }
 
-/* Header */
+nav ul{
+    margin: 0 2em 0 0;
+}
+
+nav ul li{
+    list-style: none;
+}
+
+nav ul li a{
+    text-decoration: none;
+    color: black;
+
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover{
+    opacity: 0.5;
+    text-decoration: underline;
+
+    transition: all 0.3s ease;
+}
+
+nav .selected{
+    font-weight: bold;
+}
+/* #endregion */
+
+/* #region header */
 
 header{
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100vw;
+    height: 80vh;
     top: 0;
 }
+
 div.profilePic{
-    background-image: url("./images/About/2.JPG");
+    background-image: url("./images/About/1.jpg");
     background-size: cover;
     width: 400px;
     height: 400px;
 }
 
-div.behindPic{
+.behindPic{
     background-image: url("./images/Picture1.png");
     background-size: cover;
     width: 38.197vw;
-    height: 100vh;
+    height: 180%;
     position: absolute;
     top: 0;
     right: 0;
     z-index: -1;
+    
 }
 
 .header-content{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    align-items: center;
+    align-items: flex-end;
     gap: 2em;
 }
 
@@ -212,10 +253,30 @@ div.behindPic{
     text-align: right;
 }
 
+.header-content .personal-info{
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.header-content .personal-info ul{
+    text-align: right;
+    justify-content: flex-start;
+}
+
+.header-content .personal-info ul li{
+    text-align: right;
+}
+
+/* #endregion header */
+
+/* #region about */
 .about-content{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 2em;
+    margin: 3em 0 0 0;
 }
 
 .about-content p{
@@ -230,16 +291,27 @@ div.behindPic{
     width: 24vw;
 }
 
+.about{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10em;
+}
 
+.collage{
+    width: 25em;
+}
+/* #endregion about */
 
-/* main{
+main{
     width: 77vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
 }
-
+/*
 main .mainBox {
     width: 50%;
     padding: 1vh 0 2vh 0;
@@ -347,6 +419,34 @@ main .mainBox .content img{
 .experience h3, .experience p{
     margin: 0 0 0 0;
 } */
+
+/* #region footer */
+footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 10vh;
+    margin-top: 5em;
+}
+
+footer .footer-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+footer .footer-content div ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+/* #endregion */
 
 @media (max-width: 768px) {
     h1{
