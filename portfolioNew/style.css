@@ -467,6 +467,7 @@ footer .footer-content div ul{
 /* #endregion */
 
 @media (max-width: 768px) {
+    /* #region basicText */
     h1{
         font-size: 4vh;
         line-height: 6vh;
@@ -486,6 +487,7 @@ footer .footer-content div ul{
         font-size: 2vh;
         line-height: 3vh;
     }
+    /* #endregion */
 
     body {
         flex-direction: column;
@@ -518,7 +520,7 @@ footer .footer-content div ul{
     
     /* #region header */
     header{
-        height: 80vh;
+        height: 76vh;
     }
 
     div.profilePic{
