@@ -493,55 +493,129 @@ footer .footer-content div ul{
         height: fit-content;
     }
 
-    .nostyle {
-        font-style: normal;   
-    }
-    
-    aside {
-        width: 100%;
-        height: 27vh;
-        flex-direction: row;
-        justify-content: flex-start;
+    /* #region nav */
+    nav{
+        display: flex;
+        position: absolute;
+        top: 2em;
+        justify-content: space-between;
         align-items: center;
-        min-height: fit-content;
-        overflow-x: auto;
-        overflow-y: hidden; 
+        width: 90vw;
+        left: 5vw;
     }
 
-    aside .mini_card {
-        min-width: 75%;
-        margin: 0 2vw 0 2vw;
-        height: 26vh;
+    nav::after{
+        content: "Jeroen Roelant";
+        width: 30vw;
+        text-align: right;
+        font-size: 1.5em;
+        font-weight: light;
+        
+        z-index: -1;
     }
 
-    aside .mini_card:last-child{
-        margin-bottom: 0;
-    }
-
-    aside .mini_card:hover {
-        scale: 1;
-    }
-
-    aside .mini_card .image {
-        height: 18vh;
-    }
-
-    aside .mini_card .info .data {
-        font-size: 1em;
-    }
-
-    aside .mini_card h2 {
-        line-height: 2.5vh;
-    }
+    /* #endregion */
     
+    /* #region header */
+    header{
+        height: 80vh;
+    }
+
+    div.profilePic{
+        width: 80vw;
+        height: 28vh;
+        order: 1;
+    }
+
+    .behindPic {
+        background-attachment: fixed;
+        width: 100vw;
+        height: 48vh;
+        margin-top: 20vh;
+        filter: brightness(70%);
+    }
+
+    .header-content{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+    }
+
+    .header-content h1{
+        display: none;
+        color: #eeeeee;
+    }
+
+    .header-content h1, .header-content h2{
+        text-align: center;
+        color: #eeeeee;
+    }
+
+    .header-content .personal-info{
+        color: #eeeeee;
+        justify-content: center;
+        align-items: center;
+        order: 2;
+    }
+
+    .header-content .personal-info h2.subtitle{
+        font-size: 1.1em;
+        order: 2;
+        margin: -1em 0 0 0;
+    }
+
+    .header-content .personal-info ul{
+        text-align: center;
+        justify-content: center;
+        order: 3;
+    }
+
+    .header-content .personal-info ul li{
+        text-align: left;
+        font-size: small;
+    }
+    /* #endregion */
+
+    /* #region about */
+    .about{
+        margin: -3em 0 0 0;
+    }
+    .about-content p{
+        width: 90vw;
+        gap: 0.8em;
+    }
+
+    img.collage{
+        display: none;
+    }
+
+    /* #endregion */
+
+    /* #region projects */
+
+    .projects-list{
+        width: 100vw;
+        grid-template-columns: 90vw;
+        grid-row-gap: 2em;
+
+        justify-items: stretch;
+        align-items: stretch;
+        margin: 8em 0 0 10vw;
+    }
+
+    /* #endregion */
+
+    /* #region project */
     main {
         width: 100%;
         overflow-y: hidden;
+        overflow-x:auto;
     }
     
     main .mainBox {
         width: 96%;
-        margin: 1vh 2vw 1vh 2vw;
+        margin: 8em 2vw 0 2vw;
     }
     
     main .mainBox .imageCarousel img {
@@ -551,7 +625,28 @@ footer .footer-content div ul{
     main .mainBox .imageCarousel img:hover {
         scale:1;
     }
+
+    /* #endregion */
     
+    /* #region footer */
+
+    footer{
+        height: 20vh;
+    }
+
+    footer .footer-content{
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    footer .footer-content div ul{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* #endregion */
+
+    /* #region bigImage */
     .big-image {
         max-height: 60vh;
         max-width: 90vw;
@@ -563,4 +658,5 @@ footer .footer-content div ul{
         top: 50%;
         left: 50%;
     }
+    /* #endregion */
 }

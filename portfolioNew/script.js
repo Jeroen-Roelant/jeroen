@@ -27,7 +27,7 @@ fetch(filePath)
         }
     })
 
-if(['/portfolioNew/index.html', '/portfolioNew/', '/', '/index.html', '/preview/index.html', '/preview/', '/preview'].includes(window.location.pathname)){ 
+if(['/portfolioNew/index.html', '/portfolioNew/', '/', '/index.html', '/preview/index.html', '/preview/', '/preview'].includes(window.location.pathname) && window.innerWidth > 768){ 
     document.addEventListener('scroll', function() {
         const behindPic = document.getElementById('behindPic');
         const scrollPosition = window.scrollY;
@@ -38,7 +38,12 @@ if(['/portfolioNew/index.html', '/portfolioNew/', '/', '/index.html', '/preview/
     // let randomIndex = Math.floor(Math.random() * this.recommendationUrls.length);
     // let randomUrl = this.recommendationUrls[randomIndex];
     // document.getElementById('spotify-rec').src = randomUrl;
-};
+} 
+// else {
+//     const scrollPosition = window.scrollY;
+//     document.getElementById('behindPic').style.backgroundPositionY = `${scrollPosition}px`;
+    
+// }
 
 
 
