@@ -25,7 +25,7 @@ fetch(filePath)
         }
     })
 
-if(['/portfolioNew/index.html', '/portfolioNew/', '/', '/index.html', '/preview/index.html', '/preview/'].includes(window.location.pathname)){ 
+if(['/portfolioNew/index.html', '/portfolioNew/', '/', '/index.html', '/preview/index.html', '/preview/', '/preview'].includes(window.location.pathname)){ 
     document.addEventListener('scroll', function() {
         const behindPic = document.getElementById('behindPic');
         const scrollPosition = window.scrollY;
