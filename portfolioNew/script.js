@@ -2,6 +2,8 @@ const filePath = './siteContent.json';
 
 let data = [];
 
+console.log(window.location.pathname);
+
 fetch(filePath)
     .then(Response => Response.json())
     .then(data => {
