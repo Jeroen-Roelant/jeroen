@@ -430,28 +430,8 @@ main .mainBox .content img{
 
 /* #endregion */
 
-/* .horizontalList{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    overflow-x: auto;
-    overflow-y: hidden;
-    gap: 2vw;
-}
-
-.experience{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 1vh 0 2vh 0;
-}
-
-.experience h3, .experience p{
-    margin: 0 0 0 0;
-} */
-
 /* #region footer */
+
 footer{
     display: flex;
     flex-direction: row;
