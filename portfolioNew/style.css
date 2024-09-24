@@ -233,7 +233,7 @@ header{
 }
 
 div.profilePic{
-    background-image: url("./images/About/1.jpg");
+    background-image: url("./images/About/pfp.jpg");
     background-size: cover;
     width: 400px;
     height: 400px;
@@ -605,6 +605,14 @@ footer .footer-content div ul{
         justify-items: stretch;
         align-items: stretch;
         margin: 8em 0 0 10vw;
+    }
+
+    .mini_card .data{
+        font-size: 1em;
+    }
+
+    .mini_card .info{
+        margin: 0 0 0 0.5em;
     }
 
     /* #endregion */

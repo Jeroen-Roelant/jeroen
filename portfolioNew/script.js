@@ -54,7 +54,7 @@ function createMiniCard(id, imageSrc, cardDescription, cardTitle) {
                 <img src="${imageSrc}" alt="placeholder">
             </div>
             <div class="info">
-                <p class="data ubuntu-medium-italic">${cardDescription}</p>
+                <p class="data ubuntu-regular-italic">${cardDescription}</p>
                 <h2 class="ubuntu-bold">${cardTitle}</h2>
             </div>
         </div>

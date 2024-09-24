@@ -109,15 +109,15 @@ connect()
 })
     .use(
         // Serve the portfolio
-        serveStatic(__dirname + '/portfolio')
+        serveStatic(__dirname + '/portfolioNew')
         // serveStatic(__dirname + '/wordleClone')
 
     )
     .use('/wordle', 
         serveStatic(__dirname + '/wordleClone')
     )
-    .use('/preview', 
-        serveStatic(__dirname + '/portfolioNew')
+    .use('/legacy', 
+        serveStatic(__dirname + '/portfolio')
     )
     .use('/cv', async (req, res) => {
         var query = qs.parse(req._parsedUrl.query);
