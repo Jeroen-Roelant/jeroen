@@ -1,6 +1,7 @@
 const filePath = './siteContent.json';
 
 let data = [];
+// recommendationUrls = ["https://open.spotify.com/embed/track/5Qv2Nby1xTr9pQyjkrc94J?utm_source=generator", "https://open.spotify.com/embed/track/4mRSbPLnOm54ttkTYvxxSY?utm_source=generator", "https://open.spotify.com/embed/track/2bs56RTPDDT7aCu3t2LGHd?utm_source=generator", "https://open.spotify.com/embed/track/0j5FJJOmmnXPd0XajFWkMF?utm_source=generator", "https://open.spotify.com/embed/track/20ExQDt5c9FkcoyDZzRm4o?utm_source=generator", "https://open.spotify.com/embed/track/376NlA4w5MQytogS2JUVX9?utm_source=generator", "https://open.spotify.com/embed/track/0R3aeCg7ofE3SD89MNySgA?utm_source=generator", "https://open.spotify.com/embed/track/39WRg2JYdZVaBFVS3oBTXo?utm_source=generator" ];
 
 console.log(window.location.pathname);
 
@@ -18,7 +19,6 @@ fetch(filePath)
                     goToProject(card.id);
                 });
             });
-            
         };
 
         
@@ -34,6 +34,10 @@ if(['/portfolioNew/index.html', '/portfolioNew/', '/', '/index.html', '/preview/
         behindPic.style.right = `-${scrollPosition}px`;
         behindPic.style.opacity = 1 - (scrollPosition / 1000);
     });
+
+    // let randomIndex = Math.floor(Math.random() * this.recommendationUrls.length);
+    // let randomUrl = this.recommendationUrls[randomIndex];
+    // document.getElementById('spotify-rec').src = randomUrl;
 };
 
 
