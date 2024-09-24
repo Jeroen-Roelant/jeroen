@@ -7,7 +7,7 @@ fetch(filePath)
     .then(data => {
         this.data = data;
 
-        if(window.location.pathname === '/portfolioNew/projects.html' || window.location.pathname === '/projects.html' || window.location.pathname === '/preview/projects.html'){ 
+        if(['/portfolioNew/index.html', '/portfolioNew/projects.html', '/projects.html', '/preview/projects.html'].includes(window.location.pathname)){ 
             data.forEach((e, index) => {
                 createMiniCard(index ,e.imageSrc[0], e.Description, e.Title);
             });
@@ -19,12 +19,13 @@ fetch(filePath)
             
         };
 
-        if(window.location.pathname === '/portfolioNew/project.html' || window.location.pathname === '/project.html' || window.location.pathname === '/preview/project.html'){
+        
+        if(['/portfolioNew/project.html', '/project.html', '/preview/project.html'].includes(window.location.pathname)){
             changeMainContent();
         }
     })
 
-if(window.location.pathname === '/portfolioNew/index.html' || window.location.pathname === '/portfolioNew/' || window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '/preview/index.html'){ 
+if(['/portfolioNew/index.html', '/portfolioNew/', '/', '/index.html', '/preview/index.html', '/preview/'].includes(window.location.pathname)){ 
     document.addEventListener('scroll', function() {
         const behindPic = document.getElementById('behindPic');
         const scrollPosition = window.scrollY;
