@@ -1,1 +1,9 @@
-Sitemap: sitemap.xml
+# Indicate the location of the sitemap
+Sitemap: https://jeroenroelant.tech/sitemap.xml
+
+# Allow all web crawlers to access all content
+User-agent: *
+Disallow:
+
+# Indicate the location of the humans.txt file
+Humans: https://jeroenroelant.tech/humans.txt

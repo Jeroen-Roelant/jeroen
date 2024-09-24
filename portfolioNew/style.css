@@ -604,7 +604,8 @@ footer .footer-content div ul{
 
         justify-items: stretch;
         align-items: stretch;
-        margin: 8em 0 0 10vw;
+        margin: 8em 0 0 0;
+        padding: 0 0 0 5vw;
     }
 
     .mini_card .data{
