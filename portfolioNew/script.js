@@ -103,6 +103,8 @@ function changeMainContent() {
         });
     });
 
+    document.querySelector('title').innerHTML = this.data[id].Title + ' | Jeroen Roelant';
+
     document.querySelector('main .mainBox .title').innerHTML = this.data[id].Title;
     document.querySelector('main .mainBox .description').innerHTML = this.data[id].Description;
     document.querySelector('main .mainBox .content').innerHTML = this.data[id].Content;
