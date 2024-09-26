@@ -101,6 +101,12 @@ connect()
         else if (req.url.includes('/dash')) {
             addToIplogs(`<span style='color: rgb(243, 181, 11)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}   ${req.method}   ${req.url}</span>`);
         }
+        else if (req.url.includes('/project?id=')) {
+            addToIplogs(`<span style='color: rgb(0, 255, 255)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}   ${req.method}   ${req.url}</span>`);
+        }
+        else if (req.url.includes('/images')) {
+            addToIplogs(`<span style='color: rgb(100, 100, 100)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}   ${req.method}   ${req.url}</span>`);
+        }
         else {
             addToIplogs(`${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress} ${req.method} ${req.url}`);
         }
