@@ -136,6 +136,15 @@ body{
     overflow-x: visible;
 }
 
+#highlighted{
+    display:block;
+}
+
+#highlighted .mini_card{
+    width: 28em;
+    margin: 1em 0 0 0;
+}
+
 .mini_card {
     display: flex;
     flex-direction: column;
@@ -254,6 +263,7 @@ div.profilePic{
 
 .behindPic{
     background-image: url("./images/Picture1.png");
+    background-attachment:local;
     background-size: cover;
     width: 38.197vw;
     height: 180%;

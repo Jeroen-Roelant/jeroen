@@ -1,14 +1,8 @@
 [
     {
         "imageSrc": ["./images/Events/forward1.jpg"],
-        "Description": "Cool events",
-        "Title": "Events",
+        "Description": "Events",
+        "Title": "Forward festival",
         "Content": "Forward festival"
-    },
-    {
-        "imageSrc": ["./images/WordAnimation/1.gif", "./images/WordAnimation/2.gif", "./images/UselessWeb/1.gif", "./images/UselessWeb/2.gif"],
-        "Description": "Design 4",
-        "Title": "HTML/CSS projectjes",
-        "Content": "<div class='techStack'><img src='./images/techStack/html.jpg' alt='html'><img src='./images/techStack/css.jpg' alt='css'><img src='./images/techStack/js.jpg' alt='js'></div><h2>Word animations</h2><p>We kregen enkele willekeurige woorden waarvan we een animatietje moesten maken, met CSS. Dit zijn de resultaten er van!</p> <p>Bekijk hier de <a href='https://jeroen-roelant.github.io/Design4/WordAnimation/Jazz_animation/index.html'>Jazz animatie</a> en de <a href='https://jeroen-roelant.github.io/Design4/WordAnimation/computer_animation/index.html'>Computer animatie</a>, of hier de <a href='https://github.com/Jeroen-Roelant/Design4/blob/main/WordAnimation/Jazz_animation/styles.css'>Jazz broncode</a> en de <a href='https://github.com/Jeroen-Roelant/Design4/blob/main/WordAnimation/computer_animation/styles.css'>Computer broncode</a>.</p> <h2>Useless web</h2> <p>Hier was de opdracht om gewoon enkele nutteloze websites te maken. Ik heb er voor gekozen om een calculator te maken die altijd wel juist antwoord, maar een antwoord geeft waar je niets mee bent een een left-on-red simulator die nooit antwoord op je berichtjes.</p><p>Probeer de <a href='https://jeroen-roelant.github.io/Design4/UselessWeb/Technically_correct_calculator/calculator.html'>Calculator</a> en <a href='https://jeroen-roelant.github.io/Design4/UselessWeb/LeftOnReadSim/index.html'>Left on read simulator</a>, of bekijk hier de <a href='https://github.com/Jeroen-Roelant/Design4/tree/main/UselessWeb/Technically_correct_calculator'>calculator broncode</a> of de <a href='https://github.com/Jeroen-Roelant/Design4/tree/main/UselessWeb/LeftOnReadSim'>left on read simulator broncode</a>.</p><h2>Lessons learned</h2><p>Aangezien ik nog niet wist hoe CSS animations werkte, was dit een leuke eerste introductie.</p>"
     }
 ]

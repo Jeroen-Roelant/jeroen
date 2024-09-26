@@ -25,6 +25,24 @@ fetch(filePath)
         if(['/portfolioNew/project.html', '/project.html', '/preview/project.html'].includes(window.location.pathname)){
             changeMainContent();
         }
+
+        if(['/portfolioNew/index.html', '/portfolioNew/', '/', '/index.html', '/preview/index.html', '/preview/', '/preview'].includes(window.location.pathname) && window.innerWidth > 768){ 
+            document.querySelector('.projects-list').innerHTML = '';
+
+            let indexes = [];
+            while(indexes.length < 2){
+                let randomIndex = Math.floor(Math.random() * data.length);
+                if(!indexes.includes(randomIndex)){
+                    indexes.push(randomIndex);
+                    createMiniCard(randomIndex ,data[randomIndex].imageSrc[0], data[randomIndex].Description, data[randomIndex].Title);
+                }
+            }
+            document.querySelectorAll('.projects-list .mini_card').forEach(card => {
+                card.addEventListener('click', () => {
+                    goToProject(card.id);
+                });
+            });
+        }
     })
 
 if(['/portfolioNew/index.html', '/portfolioNew/', '/', '/index.html', '/preview/index.html', '/preview/', '/preview'].includes(window.location.pathname) && window.innerWidth > 768){ 
