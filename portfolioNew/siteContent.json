@@ -72,7 +72,7 @@
         "Content": "<p>15 November 2022 had ik meegedaan aan Hack The Future, een hackathon georganiseerd door de Cronos groep. In groep kregen we de opdracht om oplossingen te bedenken voor problemen die ze gaven. Het was een zeer leerrijke ervaring, en ik heb er veel van opgestoken. Het was ook een goede mogelijkheid om te netwerken met andere studenten en bedrijven.</p><p>Onze <a href='https://github.com/Jeroen-Roelant/HackTheFuture2022'>oplossingen</a> werden gemaakt in Angular, omdat we dan konden werken met TypeScript en direct een visualisatie konden maken van onze problemen.</p><p>Uiteindelijk werden we vierde van onze groep. De sfeer (en het gratis eten en drank) waren toch zeker de moeite. 🥳</p>"
     },
     {
-        "imageSrc": ["./images/Events/valencia3.jpg", "./images/Events/valencia0.jpg", "./images/Events/valencia1.jpg", "./images/Events/valencia2.jpg"],
+        "imageSrc": ["./images/Events/valencia3.jpg", "./images/Events/Valencia0.jpg", "./images/Events/valencia1.jpg", "./images/Events/valencia2.jpg"],
         "Description": "Events",
         "Title": "ICT-week Valencia",
         "Content":"<p>In juli 2022 heb ik samen met enkele vrienden mee gedaan aan de ICT-week 2022, in Valencia. Dit was een internationaal evenement, waar we in diverse groepjes een soort van een week lange hackathon moesten afleggen voor Android apps in het thema van de stad Valencia. Mijn groep en ik hebben een applicatie gemaakt die bar's en café's toont op een kaart, en terwijl ook hun goedkoopste bier toont.</p><p>Ons groepje heeft uiteindelijk de hackathon gewonnen.</p>"
