@@ -601,7 +601,7 @@ footer .footer-content div ul{
         gap: 0.8em;
     }
 
-    img.collage{
+    #highlighted{
         display: none;
     }
 
