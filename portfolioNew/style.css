@@ -523,7 +523,7 @@ footer .footer-content div ul{
     
     /* #region header */
     header{
-        margin: 1em 0 0 0;
+        margin: 2vh 0 0 0;
         height: 76vh;
     }
 
@@ -536,6 +536,7 @@ footer .footer-content div ul{
     }
 
     div.profilePic{
+        background-position: 0 18%;
         width: 80vw;
         height: 28vh;
         order: 1;
