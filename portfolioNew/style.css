@@ -346,6 +346,62 @@ main{
     overflow-y: auto;
 }
 
+/* #region contact */
+
+.contact{
+    width: 40vw;
+    background-color: #ffffff;
+    box-shadow: 0 0 2vw var(--shadow);
+    padding: 1em 1em 1em 1em;
+}
+
+.contact form{
+    display: flex;
+    flex-direction: column;
+}
+
+.contact form label{
+    margin: 1em 0 0.5em 0;
+}
+
+.contact form input, .contact form textarea{
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    background-color: rgb(238, 238, 238);
+    font-family: "Ubuntu", sans-serif;
+    border: none;
+}
+
+.contact form textarea{
+    resize: vertical;
+    min-height: 8em;
+}
+
+.contact form button{
+    margin: 1em 0 0 0;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    color: #ffffff;
+    font-family: "Ubuntu", sans-serif;
+    background-color: var(--lime);
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+
+    transition: all 0.3s ease;
+}
+
+.contact form button:disabled{
+    background-color: rgb(238, 238, 238);
+    color: rgba(0, 0, 0, 0.438);
+}
+
+.contact form button:hover{
+    opacity: 0.8;
+    
+    transition: all 0.3s ease;
+}
+
+/* #endregion */
+
 /* #region mainproject */
 
 main .mainBox {
