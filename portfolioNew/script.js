@@ -31,7 +31,7 @@ fetch(filePath)
             let indexes = [];
             while(indexes.length < 2){
                 let randomIndex = Math.floor(Math.random() * data.length);
-                if(!indexes.includes(randomIndex) && ![3,4, 8].includes(randomIndex)){
+                if(!indexes.includes(randomIndex) && ![2,3,4,8].includes(randomIndex)){
                     indexes.push(randomIndex);
                     createMiniCard(randomIndex ,data[randomIndex].imageSrc[0], data[randomIndex].Description, data[randomIndex].Title);
                 }
