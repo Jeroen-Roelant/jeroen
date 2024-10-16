@@ -41,6 +41,9 @@ fetch(filePath)
                     goToProject(card.id);
                 });
             });
+
+            let comp = document.querySelector('.projects-list');
+            comp.insertAdjacentHTML('beforeend', "<p class=\"ubuntu-regular\" style=\"text-align:center; width:100%; margin: 1em 0 0 0;\"><a href=\"./projects.html\" >Meer projecten</a></p>");
         }
     })
 
