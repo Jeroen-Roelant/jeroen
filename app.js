@@ -214,15 +214,18 @@ connect()
             <head>
                 <title>Jeroen's wishlist</title>
             </head>
-            <body style='height: 100vh; display: flex; justify-content: center; align-items:center; felx-direction: column;'>
-                <p>Ik zou graag een saabje hebben</p>
-                <img src="https://www.saab-heritage.fr/saabHeritage_images/produits/img-4481.jpg" alt="saabje"/>
-                <h2>Redenen waarom ik een saabje wil</h2>
-                <ol>
-                    <li>Ik ben heel flink geweest dit jaar</li>
-                    <li>Ik ben flinker geweest dan Steven dit jaar</li>
-                    <li>Ne chocolaten is ook goed</li>
-                </ol>
+            <body style='height: 100vh;'>
+                <div style='height: 100%; display: flex; justify-content: center; align-items:center; flex-direction: column;'>
+                    <p>Ik zou graag een saabje hebben</p>
+                    <img src="https://static.autoblog.nl/images/wp2018/saab-9-5-hirsch-troll-estate-grey-front-side-2003-750-2.jpg" alt="saabje"/>
+                    <h3>Redenen waarom ik een saabje wil</h3>
+                    <ol>
+                        <li>Ik ben heel flink geweest dit jaar</li>
+                        <li>Ik ben flinker geweest dan Steven dit jaar</li>
+                        <li>Ik zit zo lang op den bus</li>
+                        <li>Ne chocolaten is ook goed</li>
+                    </ol>
+                </div>
             </body>
             </html>
         `);
