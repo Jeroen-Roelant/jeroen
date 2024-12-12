@@ -206,4 +206,25 @@ connect()
             res.end('Unauthorized');
         }
     })
+    .use('/wishlist', async (req, res) => {
+        // Dashboard
+        res.end(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Jeroen's wishlist</title>
+            </head>
+            <body style='height: 100vh; display: flex; justify-content: center; align-items:center; felx-direction: column;'>
+                <p>Ik zou graag een saabje hebben</p>
+                <img src="https://www.saab-heritage.fr/saabHeritage_images/produits/img-4481.jpg" alt="saabje"/>
+                <h2>Redenen waarom ik een saabje wil</h2>
+                <ol>
+                    <li>Ik ben heel flink geweest dit jaar</li>
+                    <li>Ik ben flinker geweest dan Steven dit jaar</li>
+                    <li>Ne chocolaten is ook goed</li>
+                </ol>
+            </body>
+            </html>
+        `);
+    })
     .listen(process.env.PORT || 3000, () => console.log('Server running on ' + (process.env.PORT || 3000)));
