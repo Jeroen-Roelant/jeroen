@@ -1,9 +1,9 @@
-var connect = require('connect');
-var serveStatic = require('serve-static');
-var qs = require('qs');
-var mysql = require('mysql');
+var connect = require("connect");
+var serveStatic = require("serve-static");
+var qs = require("qs");
+var mysql = require("mysql");
 
-require('dotenv').config();
+require("dotenv").config();
 
 let startDateTime = new Date();
 
@@ -24,150 +24,197 @@ let iplogs = [];
 let pathsToIgnore = [];
 
 const MAX_IPLOGS = process.env.MAXIPLOGS || 1000;
+const ENABLE_DB = process.env.ENABLE_DB || false;
 
 function addToIplogs(log) {
-    if (iplogs.length >= MAX_IPLOGS) {
-        iplogs.shift(); // Remove the oldest item
-    }
-    iplogs.push(log);
+  if (iplogs.length >= MAX_IPLOGS) {
+    iplogs.shift(); // Remove the oldest item
+  }
+  iplogs.push(log);
 }
 
 async function getRefs() {
-    await connection.query('SELECT siteRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);', (err, result) => { 
-        if (err) console.error(err);
-        cvRefsSite = result[0].siteRef;
-    });
-    
-    await connection.query('SELECT mailRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);', (err, result) => { 
-        if (err) console.error(err);
-        cvRefsMail = result[0].mailRef;
-    });
-    
-    await connection.query('SELECT otherRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);', (err, result) => { 
-        if (err) console.error(err);
-        cvRefs = result[0].otherRef;
-    });
+  await connection.query(
+    "SELECT siteRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);",
+    (err, result) => {
+      if (err) console.error(err);
+      cvRefsSite = result[0].siteRef;
+    },
+  );
 
-    await connection.query('SELECT SUM(siteRef) AS totalSiteRef FROM cvrefs;', (err, result) => {
-        if (err) console.error(err);
-        totalCvRefsSite = result[0].totalSiteRef;
-    });
+  await connection.query(
+    "SELECT mailRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);",
+    (err, result) => {
+      if (err) console.error(err);
+      cvRefsMail = result[0].mailRef;
+    },
+  );
 
-    await connection.query('SELECT SUM(mailRef) AS totalMailRef FROM cvrefs;', (err, result) => {
-        if (err) console.error(err);
-        totalCvRefsMail = result[0].totalMailRef;
-    });
+  await connection.query(
+    "SELECT otherRef FROM cvrefs WHERE id = (SELECT MAX(id) FROM cvrefs);",
+    (err, result) => {
+      if (err) console.error(err);
+      cvRefs = result[0].otherRef;
+    },
+  );
 
-    await connection.query('SELECT SUM(otherRef) AS totalOtherRef FROM cvrefs;', (err, result) => {
-        if (err) console.error(err);
-        totalCvRefs = result[0].totalOtherRef;
-    });
+  await connection.query(
+    "SELECT SUM(siteRef) AS totalSiteRef FROM cvrefs;",
+    (err, result) => {
+      if (err) console.error(err);
+      totalCvRefsSite = result[0].totalSiteRef;
+    },
+  );
 
-    return true;
+  await connection.query(
+    "SELECT SUM(mailRef) AS totalMailRef FROM cvrefs;",
+    (err, result) => {
+      if (err) console.error(err);
+      totalCvRefsMail = result[0].totalMailRef;
+    },
+  );
+
+  await connection.query(
+    "SELECT SUM(otherRef) AS totalOtherRef FROM cvrefs;",
+    (err, result) => {
+      if (err) console.error(err);
+      totalCvRefs = result[0].totalOtherRef;
+    },
+  );
+
+  return true;
 }
 
 // Connect to MySQL instance
 const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT) || 3306 ,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT) || 3306,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
-connection.connect((err) => {
+if (ENABLE_DB) {
+  connection.connect((err) => {
     if (err) {
-        console.error('Error connecting to MySQL:', err);
+      console.error("Error connecting to MySQL:", err);
     } else {
-        console.log('Connected to MySQL');
-        connection.query('CREATE TABLE IF NOT EXISTS cvrefs (id INT AUTO_INCREMENT PRIMARY KEY, siteRef INT, mailRef INT, otherRef INT);', (err, result) => { if (err) console.error(err); });
-        connection.query('INSERT INTO cvrefs (siteRef, mailRef, otherRef) VALUES (0, 0, 0);', (err, result) => { if (err) console.error(err); });
-        connection.query('SELECT COUNT(*) AS refsCount FROM cvrefs;', 
-            (err, result) => { 
-                if (err) console.error(err); 
-                cvRefsCurrentRow = result[0].refsCount;
-            });
+      console.log("Connected to MySQL");
+      connection.query(
+        "CREATE TABLE IF NOT EXISTS cvrefs (id INT AUTO_INCREMENT PRIMARY KEY, siteRef INT, mailRef INT, otherRef INT);",
+        (err, result) => {
+          if (err) console.error(err);
+        },
+      );
+      connection.query(
+        "INSERT INTO cvrefs (siteRef, mailRef, otherRef) VALUES (0, 0, 0);",
+        (err, result) => {
+          if (err) console.error(err);
+        },
+      );
+      connection.query(
+        "SELECT COUNT(*) AS refsCount FROM cvrefs;",
+        (err, result) => {
+          if (err) console.error(err);
+          cvRefsCurrentRow = result[0].refsCount;
+        },
+      );
     }
-});
-
+  });
+}
 
 connect()
-.use((req, res, next) => {
+  .use((req, res, next) => {
     // Log every site visit
-    if(!pathsToIgnore.includes(req.url)){
-        if (req.url.includes(`/dash?pwd=${process.env.PASSWORD}`)) {
-            addToIplogs(`<span style='color: rgb(255, 40, 40)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}    ${req.method}   ${req.url}</span>`);
-        }
-        else if (req.url.includes('/dash')) {
-            addToIplogs(`<span style='color: rgb(243, 181, 11)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}   ${req.method}   ${req.url}</span>`);
-        }
-        else if (req.url.includes('/project.html?id=')) {
-            addToIplogs(`<span style='color: rgb(0, 255, 255)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}   ${req.method}   ${req.url}</span>`);
-        }
-        else if (req.url.includes('/images')) {
-            addToIplogs(`<span style='color: rgb(100, 100, 100)'>${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress}   ${req.method}   ${req.url}</span>`);
-        }
-        else {
-            addToIplogs(`${new Date().toLocaleString('en-GB')} UTC ${req.connection.remoteAddress} ${req.method} ${req.url}`);
-        }
+    if (!pathsToIgnore.includes(req.url)) {
+      if (
+        (process.env.PASSWORD || false) &&
+        req.url.includes(`/dash?pwd=${process.env.PASSWORD}`)
+      ) {
+        addToIplogs(
+          `<span style='color: rgb(255, 40, 40)'>${new Date().toLocaleString("en-GB")} UTC ${req.connection.remoteAddress}    ${req.method}   ${req.url}</span>`,
+        );
+      } else if (req.url.includes("/dash")) {
+        addToIplogs(
+          `<span style='color: rgb(243, 181, 11)'>${new Date().toLocaleString("en-GB")} UTC ${req.connection.remoteAddress}   ${req.method}   ${req.url}</span>`,
+        );
+      } else if (req.url.includes("/project.html?id=")) {
+        addToIplogs(
+          `<span style='color: rgb(0, 255, 255)'>${new Date().toLocaleString("en-GB")} UTC ${req.connection.remoteAddress}   ${req.method}   ${req.url}</span>`,
+        );
+      } else if (req.url.includes("/images")) {
+        addToIplogs(
+          `<span style='color: rgb(100, 100, 100)'>${new Date().toLocaleString("en-GB")} UTC ${req.connection.remoteAddress}   ${req.method}   ${req.url}</span>`,
+        );
+      } else {
+        addToIplogs(
+          `${new Date().toLocaleString("en-GB")} UTC ${req.connection.remoteAddress} ${req.method} ${req.url}`,
+        );
+      }
     }
     next();
-})
-    .use(
-        // Serve the portfolio
-        serveStatic(__dirname + '/portfolioNew')
-        // serveStatic(__dirname + '/wordleClone')
+  })
+  .use(
+    // Serve the portfolio
+    serveStatic(__dirname + "/portfolioNew"),
+    // serveStatic(__dirname + '/wordleClone')
+  )
+  .use("/wordle", serveStatic(__dirname + "/wordleClone"))
+  .use("/legacy", serveStatic(__dirname + "/portfolio"))
+  .use("/cv", async (req, res) => {
+    if (ENABLE_DB) {
+      var query = qs.parse(req._parsedUrl.query);
+      const method = query.method;
+      // Redirect to the CV
+      if (method === "mail") {
+        await connection.query(
+          `UPDATE cvrefs SET mailRef = mailRef + 1 WHERE id = ${cvRefsCurrentRow};`,
+          (err, result) => {
+            if (err) console.error(err);
+          },
+        );
+      } else if (method === "site") {
+        await connection.query(
+          `UPDATE cvrefs SET siteRef = siteRef + 1 WHERE id = ${cvRefsCurrentRow};`,
+          (err, result) => {
+            if (err) console.error(err);
+          },
+        );
+      } else {
+        await connection.query(
+          `UPDATE cvrefs SET otherRef = otherRef + 1 WHERE id = ${cvRefsCurrentRow};`,
+          (err, result) => {
+            if (err) console.error(err);
+          },
+        );
+      }
+    }
 
-    )
-    .use('/wordle', 
-        serveStatic(__dirname + '/wordleClone')
-    )
-    .use('/legacy', 
-        serveStatic(__dirname + '/portfolio')
-    )
-    .use('/cv', async (req, res) => {
-        var query = qs.parse(req._parsedUrl.query);
-        const method = query.method;
+    const url = process.env.CV_URL || "#";
 
-        // Redirect to the CV
-        if (method === 'mail') {
-            await connection.query(
-                `UPDATE cvrefs SET mailRef = mailRef + 1 WHERE id = ${cvRefsCurrentRow};`, 
-                (err, result) => { if (err) console.error(err); 
-            });
-        } else if (method === 'site') {
-            await connection.query(
-                `UPDATE cvrefs SET siteRef = siteRef + 1 WHERE id = ${cvRefsCurrentRow};`, 
-                (err, result) => { if (err) console.error(err); 
-            });
-        } else {
-            await connection.query(
-                `UPDATE cvrefs SET otherRef = otherRef + 1 WHERE id = ${cvRefsCurrentRow};`, 
-                (err, result) => { if (err) console.error(err); 
-            });
-        }
-        
-        res.writeHead(302, {
-            'Location': process.env.CV_URL
-        });
+    res.writeHead(302, {
+      Location: url,
+    });
 
-        res.end();
-    })
-    .use('/dash', async (req, res) => {
-        // Dashboard
-        var query = qs.parse(req._parsedUrl.query);
-        const password = query.pwd;
+    res.end();
+  })
+  .use("/dash", async (req, res) => {
+    // Dashboard
+    var query = qs.parse(req._parsedUrl.query);
+    const password = query.pwd;
 
-        if (password === process.env.PASSWORD) {
-            dashRefs++;
+    const _pwd = process.env.PASSWORD;
 
-            getRefs();
+    if (!!_pwd && password === _pwd) {
+      dashRefs++;
 
-            while (totalCvRefs === 0) {
-                await new Promise(resolve => setTimeout(resolve, 100));
-            }
+      getRefs();
 
-            res.end(`
+      while (totalCvRefs === 0) {
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+
+      res.end(`
                 <!DOCTYPE html>
                 <html>
                 <head>
@@ -177,7 +224,7 @@ connect()
                     <div style='font-family: arial; display: flex; flex-direction: row; flex-wrap:wrap; justify-content: space-between;'>
                         <div>
                             <h1>Dashboard</h1>
-                            <p>Running since ${startDateTime.toLocaleString('en-GB')} UTC </p>
+                            <p>Running since ${startDateTime.toLocaleString("en-GB")} UTC </p>
                             <p>cv clicks site: ${cvRefsSite} (total: ${totalCvRefsSite}) </p>
                             <p>cv clicks mail: ${cvRefsMail} (total: ${totalCvRefsMail}) </p>
                             <p>cv clicks other: ${cvRefs} (total: ${totalCvRefs}) </p>
@@ -191,7 +238,7 @@ connect()
 
                     <div id="logContainer" style='height: 50vh; padding: 1em 1em 1em 1em; overflow: scroll; color: white; background-color: black; '>
                         <code>
-                        ${iplogs.join('<br>')}
+                        ${iplogs.join("<br>")}
                         </code>
                     </div>
                 </body>
@@ -201,33 +248,11 @@ connect()
                         logContainer.scrollTop = logContainer.scrollHeight;
                 </script>
             `);
-        } else {
-            res.statusCode = 401;
-            res.end('Unauthorized');
-        }
-    })
-    .use('/wishlist', async (req, res) => {
-        // Dashboard
-        res.end(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>Jeroen's wishlist</title>
-            </head>
-            <body style='height: 100vh;'>
-                <div style='height: 100%; display: flex; justify-content: center; align-items:center; flex-direction: column;'>
-                    <p>Ik zou graag een saabje hebben</p>
-                    <img src="https://static.autoblog.nl/images/wp2018/saab-9-5-hirsch-troll-estate-grey-front-side-2003-750-2.jpg" alt="saabje"/>
-                    <h3>Redenen waarom ik een saabje wil</h3>
-                    <ol>
-                        <li>Ik ben heel flink geweest dit jaar</li>
-                        <li>Ik ben flinker geweest dan Steven dit jaar</li>
-                        <li>Ik zit zo lang op den bus</li>
-                        <li>Ne chocolaten is ook goed</li>
-                    </ol>
-                </div>
-            </body>
-            </html>
-        `);
-    })
-    .listen(process.env.PORT || 3000, () => console.log('Server running on ' + (process.env.PORT || 3000)));
+    } else {
+      res.statusCode = 401;
+      res.end("Unauthorized");
+    }
+  })
+  .listen(process.env.PORT || 3000, () =>
+    console.log("Server running on " + (process.env.PORT || 3000)),
+  );
