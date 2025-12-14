@@ -711,18 +711,17 @@ footer .footer-content div ul {
 
         display: flex;
         flex-direction: column;
-
-        margin: 8em 0 0 0;
         padding: 0 0 0 5vw;
-        background-color: tomato;
     }
 
-    .projects-list,
+    .project-list,
     .experience-list,
-    .misc-list {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-row-gap: 2em;
+    .misc-list,
+    .event-list {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 1em;
     }
 
     .mini_card .data {
