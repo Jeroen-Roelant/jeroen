@@ -232,7 +232,7 @@ connect()
                         </div>
 
                         <div>
-                            <img src='https://jeroenroelant.tech/images/favicon.ico' alt='giphy'>
+                            <img src='https://roelant.dev/images/favicon.ico' alt='giphy'>
                         </div>
                     </div>
 
