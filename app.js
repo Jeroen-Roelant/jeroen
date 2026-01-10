@@ -265,6 +265,7 @@ connect()
   })
   .use("/epaper", async (req, res) => {
     // Dashboard
+    try {
     var query = qs.parse(req._parsedUrl.query);
     const password = query.pwd;
 
@@ -285,6 +286,11 @@ connect()
       res.statusCode = 401;
       res.end("Unauthorized");
     }
+    }
+    catch (e)  {
+      res.end(e)
+    }
+
   })
   .listen(process.env.PORT || 3000, () =>
     console.log("Server running on " + (process.env.PORT || 3000)),
