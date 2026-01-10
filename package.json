@@ -17,6 +17,7 @@
     "fs": "^0.0.1-security",
     "jeroen": "file:",
     "mysql": "^2.18.1",
+    "openweather-apis": "^4.5.0",
     "serve-static": "^1.15.0"
   }
 }

@@ -2,10 +2,19 @@ var connect = require("connect");
 var serveStatic = require("serve-static");
 var qs = require("qs");
 var mysql = require("mysql");
+var weather = require("openweather-apis")
 
 require("dotenv").config();
 
+weather.setLang('en')
+weather.setAPPID(process.env.OPENWEATHER)
+weather.setCity(process.env.LOCATION)
+weather.setUnits('metric')
+
 let startDateTime = new Date();
+
+// #region REFS
+
 
 let cvRefs = 0;
 let cvRefsMail = 0;
@@ -85,6 +94,8 @@ async function getRefs() {
   return true;
 }
 
+// #endregion REFS
+
 // Connect to MySQL instance
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -157,7 +168,6 @@ connect()
   .use(
     // Serve the portfolio
     serveStatic(__dirname + "/portfolioNew"),
-    // serveStatic(__dirname + '/wordleClone')
   )
   .use("/wordle", serveStatic(__dirname + "/wordleClone"))
   .use("/legacy", serveStatic(__dirname + "/portfolio"))
@@ -248,6 +258,29 @@ connect()
                         logContainer.scrollTop = logContainer.scrollHeight;
                 </script>
             `);
+    } else {
+      res.statusCode = 401;
+      res.end("Unauthorized");
+    }
+  })
+  .use("/epaper", async (req, res) => {
+    // Dashboard
+    var query = qs.parse(req._parsedUrl.query);
+    const password = query.pwd;
+
+    const _pwd = process.env.PASSWORD;
+
+    if (!!_pwd && password === _pwd) {
+      res.end({
+        time: Date.now(),
+        content: `
+          Jeroen's dashboard: \n
+          da weather: ${(() => weather.getTemperature(function(err, temp){
+            console.log(temp)
+            return temp
+          }))()} \n
+        ` 
+      })
     } else {
       res.statusCode = 401;
       res.end("Unauthorized");
