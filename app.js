@@ -275,11 +275,7 @@ connect()
       res.end({
         time: Date.now(),
         content: `
-          Jeroen's dashboard: \n
-          da weather: ${(() => weather.getTemperature(function(err, temp){
-            console.log(temp)
-            return temp
-          }))()} \n
+          Jeroen's dashboard:
         ` 
       })
     } else {
