@@ -272,10 +272,14 @@ connect()
     const _pwd = process.env.PASSWORD;
 
     if (!!_pwd && password === _pwd) {
-      res.end({
+      res.end(
+        (() => JSON.stringify(weather.getTemperature(function(err, temp){
+          return temp
+        })))())
+        JSON.stringify({
         time: Date.now(),
         content: `
-          Jeroen's dashboard:
+          Jeroen's dashboard: \n
         ` 
       })
     } else {
