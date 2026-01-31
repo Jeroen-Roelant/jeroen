@@ -1,80 +1,28 @@
-const filePath = "./siteContent.json";
+// Multi-language support logic
+let currentLang = localStorage.getItem("portfolioLang") || "nl";
+
+const translationsPath = "./content/translations.json";
+let translations = {};
+
+const itemsPath = () => {
+  return `./content/items.${currentLang}.json`;
+};
+
+fetch(translationsPath)
+  .then((res) => res.json())
+  .then((t) => {
+    translations = t;
+    ["title", "firstname", "lastname"].forEach((x) => {
+      let el = document.getElementById(x);
+      if (el) document.getElementById(x).innerHTML = translations[x];
+    });
+    addSocials();
+    addLocaleSwitcher();
+    setLanguage(currentLang);
+    addItems();
+  });
 
 let data = [];
-
-fetch(filePath)
-  .then((Response) => Response.json())
-  .then((data) => {
-    this.data = data;
-
-    if (
-      [
-        "/portfolioNew/index.html",
-        "/portfolioNew/projects.html",
-        "/projects.html",
-        "/preview/projects.html",
-      ].includes(window.location.pathname)
-    ) {
-      data.forEach((e, index) => {
-        createMiniCard(index, e.imageSrc[0], e.Description, e.Title, e.segment);
-      });
-      document.querySelectorAll("main * .mini_card").forEach((card) => {
-        card.addEventListener("click", () => {
-          goToProject(card.id);
-        });
-      });
-    }
-
-    if (
-      [
-        "/portfolioNew/project.html",
-        "/project.html",
-        "/preview/project.html",
-      ].includes(window.location.pathname)
-    ) {
-      changeMainContent();
-    }
-
-    if (
-      [
-        "/portfolioNew/index.html",
-        "/portfolioNew/",
-        "/",
-        "/index.html",
-        "/preview/index.html",
-        "/preview/",
-        "/preview",
-      ].includes(window.location.pathname) &&
-      window.innerWidth > 768
-    ) {
-      document.querySelector(".projects-list").innerHTML = "";
-
-      let indexes = [];
-      while (indexes.length < 2) {
-        let randomIndex = Math.floor(Math.random() * data.length);
-        if (!indexes.includes(randomIndex)) {
-          indexes.push(randomIndex);
-          createMiniCard(
-            randomIndex,
-            data[randomIndex].imageSrc[0],
-            data[randomIndex].Description,
-            data[randomIndex].Title,
-          );
-        }
-      }
-      document.querySelectorAll(".projects-list .mini_card").forEach((card) => {
-        card.addEventListener("click", () => {
-          goToProject(card.id);
-        });
-      });
-
-      let comp = document.querySelector(".projects-list");
-      comp.insertAdjacentHTML(
-        "beforeend",
-        '<p class="ubuntu-regular" style="text-align:center; width:100%; margin: 1em 0 0 0;"><a href="./projects.html" >Meer projecten</a></p>',
-      );
-    }
-  });
 
 if (
   [
@@ -94,6 +42,154 @@ if (
     behindPic.style.right = `-${scrollPosition}px`;
     behindPic.style.opacity = 1 - scrollPosition / 1000;
   });
+}
+
+function addItems() {
+  fetch(itemsPath())
+    .then((Response) => Response.json())
+    .then((data) => {
+      this.data = data;
+      if (
+        [
+          "/portfolioNew/index.html",
+          "/portfolioNew/projects.html",
+          "/projects.html",
+          "/preview/projects.html",
+        ].includes(window.location.pathname)
+      ) {
+        data.forEach((e, index) => {
+          createMiniCard(
+            index,
+            e.imageSrc[0],
+            e.Description,
+            e.Title,
+            e.segment,
+          );
+        });
+        document.querySelectorAll("main * .mini_card").forEach((card) => {
+          card.addEventListener("click", () => {
+            goToProject(card.id);
+          });
+        });
+      }
+
+      if (
+        [
+          "/portfolioNew/project.html",
+          "/project.html",
+          "/preview/project.html",
+        ].includes(window.location.pathname)
+      ) {
+        changeMainContent();
+      }
+
+      if (
+        [
+          "/portfolioNew/index.html",
+          "/portfolioNew/",
+          "/",
+          "/index.html",
+          "/preview/index.html",
+          "/preview/",
+          "/preview",
+        ].includes(window.location.pathname) &&
+        window.innerWidth > 768
+      ) {
+        document.querySelector(".projects-list").innerHTML = "";
+
+        let indexes = [];
+        while (indexes.length < 2) {
+          let randomIndex = Math.floor(Math.random() * data.length);
+          if (!indexes.includes(randomIndex)) {
+            indexes.push(randomIndex);
+            createMiniCard(
+              randomIndex,
+              data[randomIndex].imageSrc[0],
+              data[randomIndex].Description,
+              data[randomIndex].Title,
+            );
+          }
+        }
+        document
+          .querySelectorAll(".projects-list .mini_card")
+          .forEach((card) => {
+            card.addEventListener("click", () => {
+              goToProject(card.id);
+            });
+          });
+
+        let comp = document.querySelector(".projects-list");
+        comp.insertAdjacentHTML(
+          "beforeend",
+          '<p class="ubuntu-regular" style="text-align:center; width:100%; margin: 1em 0 0 0;"><a href="./projects.html" >More</a></p>',
+        );
+      }
+    });
+}
+
+function addSocials() {
+  const items = Object.keys(translations.socials).map(
+    (key) =>
+      `<a class="social-icon" href="${translations.socials[key]}"><img src="./svg/${key}.svg"></img></a>`,
+  );
+  const socials = document.getElementById("socials");
+  if (socials) socials.innerHTML += items.join("");
+  const footerSocials = document.getElementById("footer-socials");
+  if (footerSocials)
+    footerSocials.innerHTML += items.map((x) => `<li>${x}</li>`).join("");
+}
+
+function addLocaleSwitcher() {
+  const options = Object.keys(translations.locale).map(
+    (l) => `<option value="${l}">${l}</option>`,
+  );
+  document.querySelector("nav").innerHTML += `<select id="language-select">
+    ${options.join("")}   
+  </select>`;
+
+  const langSelect = document.getElementById("language-select");
+  if (langSelect) {
+    langSelect.value = currentLang;
+    langSelect.addEventListener("change", (e) => {
+      currentLang = e.target.value;
+      localStorage.setItem("portfolioLang", currentLang);
+      setLanguage(currentLang);
+      addItems();
+    });
+  }
+}
+
+function setLanguage(lang) {
+  // About section
+  const aboutContent = document.querySelector(".about-content");
+  if (aboutContent && translations.locale[lang]) {
+    aboutContent.innerHTML = "";
+
+    Object.values(translations.locale[lang].index).forEach((item) => {
+      aboutContent.innerHTML =
+        aboutContent.innerHTML + `<p class=\"ubuntu-regular\">${item}</p>`;
+    });
+  }
+
+  [
+    "subtitle",
+    "age",
+    "location",
+    "experiences-title",
+    "projects-title",
+    "misc-title",
+    "events-title",
+  ].forEach((x) => {
+    const el = document.getElementById(x);
+    if (el) document.getElementById(x).innerHTML = translations.locale[lang][x];
+  });
+
+  ["experience-list", "project-list", "misc-list", "event-list"].forEach(
+    (x) => {
+      const comp = document.querySelector(`.${x}`);
+      if (comp) comp.innerHTML = "";
+    },
+  );
 }
 
 function createMiniCard(

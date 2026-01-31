@@ -127,12 +127,9 @@ body {
 
 .projects-main {
     width: 100vw;
-
     display: flex;
     flex-direction: column;
-
     margin: 8em 0 0 0;
-    padding: 0 0 0 5vw;
 }
 
 .experience-list,
@@ -216,8 +213,12 @@ body {
 /* #region nav */
 nav {
     position: fixed;
+    width: 100%;
+    padding: 0 2em 0 2em;
     top: 2em;
-    left: 2em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 nav ul {
@@ -244,6 +245,13 @@ nav ul li a:hover {
 
 nav .selected {
     font-weight: bold;
+}
+
+select#language-select {
+    padding: 4px 4px 4px 8px;
+    border-radius: 28px;
+    color: var(--lime);
+    border: 2px solid var(--lime);
 }
 /* #endregion */
 
@@ -604,16 +612,6 @@ footer .footer-content div ul {
         left: 5vw;
     }
 
-    nav::after {
-        content: "Jeroen Roelant";
-        width: 30vw;
-        text-align: right;
-        font-size: 1.5em;
-        font-weight: light;
-
-        z-index: -1;
-    }
-
     /* #endregion */
 
     /* #region header */
@@ -708,10 +706,8 @@ footer .footer-content div ul {
 
     .projects-main {
         width: 100vw;
-
         display: flex;
         flex-direction: column;
-        padding: 0 0 0 5vw;
     }
 
     .project-list,

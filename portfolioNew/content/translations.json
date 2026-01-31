@@ -1,0 +1,43 @@
+{
+    "firstname": "Jeroen",
+    "lastname": "Roelant",
+    "socials": {
+        "linkedin": "https://linkedin.com/in/jeroen-roelant",
+        "github": "https://github.com/jeroen-roelant",
+        "leetcode": "https://leetcode.com/jeroenr01"
+    },
+    "locale": {
+        "en": {
+            "subtitle": "<span class=\"mono\">Software Engineer</span> | <span class=\"ubuntu-medium-italic\">Creative Developer</span>",
+            "age": "24 Years old",
+            "location": "Brussels - Leuven - Mechelen region, 🇧🇪",
+            "index": {
+                "about_greeting": "Hi, I'm Jeroen. I am a fullstack developer currently working at aiGust, mainly focusing on frontend in Vue and backend in Python/fastApi. I have a lot of ownership over features for this innovative data-driven platform in the financial sector.",
+                "about_education": "Before I started here, I obtained two degrees: a bachelor's degree in Electronics-ICT (AP, Antwerp, 2020-2023) and a subsequent shortened bachelor's degree in Digital Experience Design (Thomas More, Mechelen, 2023-2024)",
+                "about_internship": "During my first study, I also did an internship at ChipSoft, where I worked in an in-house .NET framework on a product HiX for the healthcare sector.",
+                "about_interest": "Despite my experiences so far as a web developer, I also have a huge interest in other parts of the sector such as low-level programming, electronics, system administration, DevOps, etc. This is a topic I want to delve into in the coming years, both personally and professionally.",
+                "about_linux": "Another personal interest of mine is Linux. I've been experimenting with different distributions for a while now. Currently, I run OpenSUSE on my desktop, Manjaro (Arch) on my laptop, and AntiX on an older laptop that I want to convert into (part of) a home server."
+            },
+            "experiences-title": "Experiences",
+            "projects-title": "Projects",
+            "misc-title": "Misc.",
+            "events-title": "Events"
+        },
+        "nl": {
+            "subtitle": "<span class=\"mono\">Software Engineer</span> | <span class=\"ubuntu-medium-italic\">Creative Developer</span>",
+            "age": "24 Jaar",
+            "location": "Regio Brussel - Leuven - Mechelen, 🇧🇪",
+            "index": {
+                "about_greeting": "Hoi, ik ben Jeroen. Ik ben een fullstack ontwikkelaar die momenteel aan het werk is bij aiGust, waar ik vooral werk met de frontend in Vue en de backend in Python/fastApi. Ik krijg hier veel ownership over features voor dit innovatieve data-gedreven platform in de financiële sector.",
+                "about_education": "Voor ik hier ben begonnen, heb ik twee diploma's behaald: een bachelordiploma in de Elektronica-ICT (AP, Antwerpen, 2020-2023) en een opvolgende tweede verkorte bachelordiplona in het Digital Experience Design (Thomas More, Mechelen, 2023-2024)",
+                "about_internship": "Tijdens mijn eerste studie heb ik ook nog een stage gelopen bij ChipSoft, waar ik in een in-house .NET framework werkte aan een product HiX voor de zorgsector.",
+                "about_interest": "Ondanks mijn ervaringen tot nu toe als webdeveloper, heb ik ook een enorme interesse in andere onderdelen van de sector zoals low-level programming, elektronica, systeembeheer, DevOps, etc.. Dit is dan ook een topic waarin ik me in de komende jaren, zowel persoonlijk als professioneel wil verdiepen.",
+                "about_linux": "Een andere persoonlijke interesse van mij is Linux. Ik ben ondertussen al een tijdje aan het experimenteren met verschillende distributies. Momenteel draai ik OpenSUSE op mijn desktop, Manjaro (Arch) op mijn laptop en AntiX op een oudere laptop die ik wil ombouwen naar een (onderdeel van een) homeserver."
+            },
+            "experiences-title": "Ervaringen",
+            "projects-title": "Projecten",
+            "misc-title": "Misc.",
+            "events-title": "Evenementen"
+        }
+    }
+}

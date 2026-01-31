@@ -2,19 +2,12 @@ var connect = require("connect");
 var serveStatic = require("serve-static");
 var qs = require("qs");
 var mysql = require("mysql");
-var weather = require("openweather-apis")
 
 require("dotenv").config();
-
-weather.setLang('en')
-weather.setAPPID(process.env.OPENWEATHER)
-weather.setCity(process.env.LOCATION)
-weather.setUnits('metric')
 
 let startDateTime = new Date();
 
 // #region REFS
-
 
 let cvRefs = 0;
 let cvRefsMail = 0;
@@ -266,31 +259,25 @@ connect()
   .use("/epaper", async (req, res) => {
     // Dashboard
     try {
-    var query = qs.parse(req._parsedUrl.query);
-    const password = query.pwd;
+      var query = qs.parse(req._parsedUrl.query);
+      const password = query.pwd;
 
-    const _pwd = process.env.PASSWORD;
+      const _pwd = process.env.PASSWORD;
 
-    if (!!_pwd && password === _pwd) {
-      res.end(
-        (() => JSON.stringify(weather.getTemperature(function(err, temp){
-          return temp
-        })))())
+      if (!!_pwd && password === _pwd) {
         JSON.stringify({
-        time: Date.now(),
-        content: `
+          time: Date.now(),
+          content: `
           Jeroen's dashboard: \n
-        ` 
-      })
-    } else {
-      res.statusCode = 401;
-      res.end("Unauthorized");
+        `,
+        });
+      } else {
+        res.statusCode = 401;
+        res.end("Unauthorized");
+      }
+    } catch (e) {
+      res.end(e);
     }
-    }
-    catch (e)  {
-      res.end(e)
-    }
-
   })
   .listen(process.env.PORT || 3000, () =>
     console.log("Server running on " + (process.env.PORT || 3000)),
